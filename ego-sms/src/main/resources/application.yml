@@ -1,0 +1,26 @@
+server:
+  port: 8086
+spring:
+  application:
+    name: sms-client
+  rabbitmq:
+    host: 169.254.149.130
+    username: ego
+    password: ego
+    virtual-host: /ego
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:10086/eureka
+  instance:
+    prefer-ip-address: true
+    ip-address: 127.0.0.1
+    instance-id: ${eureka.instance.ip-address}.${server.port}
+    lease-renewal-interval-in-seconds: 5
+    lease-expiration-duration-in-seconds: 15
+ego:
+  sms:
+    accessKeyId: LTAI7GS3oLcUcUi9 # 你自己的accessKeyId
+    accessKeySecret: WWVhOk9UhvbrnF0XdFwEviTMMepz8U # 你自己的AccessKeySecret
+    signName: 易购商城 # 签名名称
+    verifyCodeTemplate: SMS_167530328 # 模板名称
