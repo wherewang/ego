@@ -1,11 +1,13 @@
 package com.ego.item.controller;
 
+import com.ego.common.pojo.CartDto;
 import com.ego.common.pojo.PageResult;
 import com.ego.item.pojo.bo.SpuBO;
 import com.ego.item.pojo.Sku;
 import com.ego.item.pojo.SpuDetail;
 import com.ego.item.service.GoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -90,7 +92,7 @@ public class GoodsCtrl {
         return ResponseEntity.ok(skuList);
     }
 
-    @GetMapping("/sku/{spuId}")
+    @GetMapping("/list/{spuId}")
     public ResponseEntity<List<Sku>> selectSkuListBySpuBOId(@PathVariable("spuId") Long spuId)
     {
         List<Sku> skuList = goodsService.getSkuListBySpuBOId(spuId);
@@ -111,6 +113,49 @@ public class GoodsCtrl {
         }
         String specifications = spuDetail.getSpecifications();
         return ResponseEntity.ok(specifications);
+    }
+
+
+    @GetMapping("/spuBo/{spuId}")
+    public ResponseEntity<SpuBO> queryGoodsById(@PathVariable("spuId")Long spuId)
+    {
+        SpuBO spuBO = goodsService.queryGoodsById(spuId);
+        if(spuBO==null )
+        {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(spuBO);
+    }
+
+    @GetMapping("/sku/{skuId}")
+    public ResponseEntity<Sku> querySkuBySkuId(@PathVariable("skuId")Long skuId)
+    {
+        Sku sku = goodsService.querySkuBySkuId(skuId);
+
+        if(sku==null)
+        {
+            return  ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(sku);
+    }
+
+
+    /**
+     * 减库存
+     * @param cartDtos
+     * @return
+     */
+    @PostMapping("stock/decrease")
+    public ResponseEntity<Void> decreaseStock(@RequestBody List<CartDto> cartDtos){
+    goodsService.decreaseStock(cartDtos);
+    return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @PostMapping("stock/seckill/decrease")
+    public ResponseEntity<Void> decreaseSeckillStock(@RequestBody CartDto cartDTO){
+        goodsService.decreaseSeckillStock(cartDTO);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
 }

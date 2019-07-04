@@ -40,7 +40,8 @@ public class BrandService {
     @Transactional
     public void save(Brand brand, List<Long> cids) {
         //保存品牌
-        brandMapper.insertSelective(brand);  //和insert的区别
+        brandMapper.insertSelective(brand);
+//insert会对所有字段赋值，即使没有值； selective会对传入的值进行非空判断，有值才给字段赋值。
         //保存品牌和类别中间关系
         if(cids!=null){
             for(Long cid:cids)

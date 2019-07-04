@@ -2,9 +2,9 @@ server:
   port: 8085
 spring:
   application:
-    name: user-client
+    name: user-service
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/ego
+    url: jdbc:mysql://127.0.0.1:3306/ego?useUnicode=true&characterEncoding=UTF-8
     username: root
     password:
     driver-class-name: com.mysql.jdbc.Driver

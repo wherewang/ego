@@ -24,7 +24,7 @@ public class User {
     @Length(min = 6,max = 20,message = "用户名长度必须在6-20之间")
     private String username;// 用户名
 
-    @JsonIgnore
+    @JsonIgnore    //作用是json序列化时将pojo中的一些属性忽略掉，序列化和反序列化都受影响
     @Length(min = 4, max = 30, message = "密码只能在4~30位之间")
     private String password;// 密码
 

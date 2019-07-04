@@ -1,4 +1,4 @@
-import com.ego.test.upload.EgoUploadService;
+import com.ego.upload.EgoUploadService;
 import com.github.tobato.fastdfs.domain.StorePath;
 import com.github.tobato.fastdfs.domain.ThumbImageConfig;
 import com.github.tobato.fastdfs.service.FastFileStorageClient;

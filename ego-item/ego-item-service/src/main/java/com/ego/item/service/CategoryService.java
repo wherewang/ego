@@ -24,7 +24,7 @@ public class CategoryService {
     }
 
     public List<Category> getListByCids(List<Long> cids) {
-//        Example example = new Example(Category.class);
+//        Example example = new Example(Category.class);  Example做复杂查询的
 //        Example.Criteria criteria = example.createCriteria().andIn("cid", cids);
 //        List<Category> categoryList = categoryMapper.selectByExample(example);
         return  categoryMapper.selectByIdList(cids);

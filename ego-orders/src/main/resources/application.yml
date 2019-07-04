@@ -1,0 +1,54 @@
+server:
+  port: 8089
+spring:
+  application:
+    name: order-service
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/ego?characterEncoding=UTF-8
+    username: root
+    password:
+    driver-class-name: com.mysql.jdbc.Driver
+  jackson:
+    default-property-inclusion: non_null
+  redis:
+    host: 169.254.149.130
+  rabbitmq:
+    host: 169.254.149.130
+    username: ego
+    password: ego
+    virtual-host: /ego
+    template:
+      retry:
+        enabled: true
+        initial-interval: 10000ms
+        max-interval: 30000ms
+        multiplier: 2
+      exchange: ego.item.exchange
+    publisher-confirms: true
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:10086/eureka
+  instance:
+    prefer-ip-address: true
+    ip-address: 127.0.0.1
+    lease-renewal-interval-in-seconds: 5 # 每隔5秒发送一次心跳
+    lease-expiration-duration-in-seconds: 10 # 10秒不发送就过期
+    instance-id: ${spring.application.name}:${server.port}
+mybatis:
+  type-aliases-package: com.ego.order.pojo
+ego:
+  jwt:
+    pubKeyPath: C:/tmp/rsa/rsa.pub # 公钥地址
+    cookieName: EGO_TOKEN # cookie的名称
+  worker:
+    workerId: 1
+    dataCenterId: 1
+  pay:
+    appId: wx53b913343fc48f69
+    mchId: 1528786171
+    key: 123456781234567812345678abcdefgh
+    connectTimeoutMs: 5000
+    readTimeoutMs: 10000
+    notifyUrl: http://api.ego.com/order/wxpay/notify
+

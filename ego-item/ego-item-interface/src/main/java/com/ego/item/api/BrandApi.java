@@ -5,6 +5,7 @@ import com.ego.item.pojo.Brand;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.CacheRequest;
 import java.util.List;
 
 @RequestMapping("/brand")
@@ -42,4 +43,7 @@ public interface BrandApi {
      */
     @GetMapping("/list")
     public ResponseEntity<List<Brand>> queryListByBids(@RequestParam("/bids") List<Long> bids);
+
+
+
 }

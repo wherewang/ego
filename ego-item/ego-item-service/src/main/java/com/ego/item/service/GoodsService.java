@@ -1,5 +1,8 @@
 package com.ego.item.service;
 
+import com.ego.common.enums.ExceptionEnum;
+import com.ego.common.exception.PayException;
+import com.ego.common.pojo.CartDto;
 import com.ego.item.pojo.*;
 import com.ego.common.pojo.PageResult;
 import com.ego.item.mapper.SkuMapper;
@@ -58,7 +61,8 @@ public class GoodsService {
         {
             criteria.andEqualTo("saleable",saleable);
         }
-        Page<Spu> pageinfo = (Page<Spu>)spuMapper.selectByExample(example);
+//        List<Spu> spus = spuMapper.selectByExample(example);
+        Page<Spu> pageinfo = (Page<Spu>) spuMapper.selectByExample(example);
 
 //将List<Spu> --> List<SpuBo>
         List<SpuBO> spuBOList = pageinfo.stream().map(spu -> {
@@ -180,7 +184,7 @@ public class GoodsService {
         List<Sku> skuList = spuBO.getSkus();
         //先清空，根据spuId
         stockMapper.deleteBySkuId(spuBO.getId());
-        //必须在根据spuid删除那几行之前，先删除stock。
+        //必须在根据spuid删除sku之前，先删除stock。
         // 又犯了个大傻逼，时间太长了，大脑记忆力，反应都很慢了
         skuMapper.deleteBySpuId(spuBO.getId());
 //        stockMapper.deleteBySkuId(spuBO.getId());
@@ -254,4 +258,50 @@ public class GoodsService {
         List<Sku> skuList = skuMapper.select(sku);
         return skuList;
     }
+
+    public SpuBO queryGoodsById(Long spuId) {
+        SpuBO spuBO = new SpuBO();
+        //查询spu，spuDetail ,skus
+        Spu spu = spuMapper.selectByPrimaryKey(spuId);
+        //copy数据
+        BeanUtils.copyProperties(spu,spuBO);
+
+        SpuDetail spuDetail = spuDetailMapper.selectByPrimaryKey(spuId);
+        spuBO.setSpuDetail(spuDetail);
+
+        Sku sku = new Sku();
+        sku.setSpuId(spuId);
+        List<Sku> skuList = skuMapper.select(sku);
+        spuBO.setSkus(skuList);  //是可以放在前面的，因为只是保存引用，指向的是空间的变化
+
+        skuList.forEach(s -> {
+            Stock stock = stockMapper.selectByPrimaryKey(s.getId());
+            s.setStock(stock);
+        });
+
+        return spuBO;
+    }
+
+    public Sku querySkuBySkuId(Long skuId) {
+        return skuMapper.selectByPrimaryKey(skuId);
+    }
+
+    @Transactional
+    public void decreaseStock(List<CartDto> cartDtos) {
+        for (CartDto cartDto : cartDtos) {
+            int count = stockMapper.decreaseStock(cartDto.getSkuId(), cartDto.getNum());
+            if (count != 1) {
+                throw new PayException(ExceptionEnum.STOCK_NOT_ENOUGH);
+            }
+        }
+    }
+
+    @Transactional
+    public void decreaseSeckillStock(CartDto cartDto) {
+        int count = stockMapper.decreaseSeckillStock(cartDto.getSkuId(), cartDto.getNum());
+        if (count != 1) {
+            throw new PayException(ExceptionEnum.STOCK_NOT_ENOUGH);
+        }
+    }
+
 }

@@ -2,7 +2,7 @@ server:
   port: 8083
 spring:
   application:
-    name: search-client
+    name: search-service
   data:
     elasticsearch:
       cluster-name: elasticsearch

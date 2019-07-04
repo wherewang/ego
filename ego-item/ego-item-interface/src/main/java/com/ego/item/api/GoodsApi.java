@@ -1,13 +1,16 @@
 package com.ego.item.api;
 
-import com.ego.common.pojo.PageResult;
-import com.ego.item.pojo.Sku;
-import com.ego.item.pojo.bo.SpuBO;
-import com.ego.item.pojo.SpuDetail;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+        import com.ego.common.pojo.CartDto;
+        import com.ego.common.pojo.PageResult;
+        import com.ego.item.pojo.Sku;
+        import com.ego.item.pojo.Spu;
+        import com.ego.item.pojo.bo.SpuBO;
+        import com.ego.item.pojo.SpuDetail;
+        import org.springframework.http.ResponseEntity;
+        import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+        import java.net.CacheRequest;
+        import java.util.List;
 
 @RequestMapping("/goods")
 public interface GoodsApi {
@@ -47,9 +50,30 @@ public interface GoodsApi {
     @GetMapping("/sku/list")            /*@PathParam*/
     public ResponseEntity<List<Sku>> getSku(@RequestParam("id") Long spuId);
 
-    @GetMapping("/sku/{spuId}")
-   public ResponseEntity<List<Sku>> selectSkuListBySpuBOId(@PathVariable("spuId") Long spuId);
+    @GetMapping("/list/{spuId}")
+    public ResponseEntity<List<Sku>> selectSkuListBySpuBOId(@PathVariable("spuId") Long spuId);
 
     @GetMapping("/skuDetail/{spuId}")
     public ResponseEntity<String> selectSkuDetailBySpuBOId(@PathVariable("spuId") Long id);
+
+    @GetMapping("/spuBo/{spuId}")
+    public ResponseEntity<SpuBO> queryGoodsById(@PathVariable("spuId")Long spuId);
+
+
+    @GetMapping("/sku/{skuId}")
+    public ResponseEntity<Sku> querySkuBySkuId(@PathVariable("skuId")Long skuId);
+
+    /**
+     * 减库存
+     * @param cartDTOS
+     */
+    @PostMapping("stock/decrease")
+    void decreaseStock(@RequestBody List<CartDto> cartDTOS);
+
+    /**
+     * 减秒杀库存
+     * @param cartDTO
+     */
+    @PostMapping("stock/seckill/decrease")
+    void decreaseSeckillStock(@RequestBody CartDto cartDTO);
 }

@@ -12,6 +12,10 @@
         <module>ego-user</module>
         <module>ego-sms</module>
         <module>ego-auth</module>
+        <module>ego-goods-web</module>
+        <module>ego-cart</module>
+        <module>ego-orders</module>
+        <module>ego-seckill</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -39,6 +43,8 @@
         <pageHelper.starter.version>1.2.3</pageHelper.starter.version>
         <ego.latest.version>0.0.1-SNAPSHOT</ego.latest.version>
         <fastDFS.client.version>1.26.1-RELEASE</fastDFS.client.version>
+        <wxpay.version>0.0.3</wxpay.version>
+        <swagger.version>2.9.2</swagger.version>
     </properties>
 
     <dependencyManagement>
@@ -81,7 +87,34 @@
                 <artifactId>fastdfs-client</artifactId>
                 <version>${fastDFS.client.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-core</artifactId>
+                <version>2.9.3</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.github.wxpay</groupId>
+                <artifactId>wxpay-sdk</artifactId>
+                <version>${wxpay.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger2</artifactId>
+                <version>${swagger.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger-ui</artifactId>
+                <version>${swagger.version}</version>
+            </dependency>
         </dependencies>
+
+
+
     </dependencyManagement>
 
 

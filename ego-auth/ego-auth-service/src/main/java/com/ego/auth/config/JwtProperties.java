@@ -33,7 +33,7 @@ public class JwtProperties {
     }
     //初始化方法，该方法在构造方法执行后，再执行的
     //从java对象的生命周期来看，虚拟机里面先new对象时，里面的成员变量先默认初始化，再显示初始化
-    //再执行构造方法，spring才帮你把属性值注入进来
+    //再执行构造方法，最后spring才帮你把属性值注入进来
     @PostConstruct
     public void init() {
         //如果没有就初始化公钥和私钥

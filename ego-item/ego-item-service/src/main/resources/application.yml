@@ -2,7 +2,7 @@ server:
   port: 8081
 spring:
   application:
-    name: item-client
+    name: item-service
   datasource:
     url: jdbc:mysql://localhost:3306/ego?useUnicode=true&characterEncoding=UTF-8
     driver-class-name: com.mysql.jdbc.Driver

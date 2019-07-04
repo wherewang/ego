@@ -51,4 +51,16 @@ public class CategoryCtrl {
         String cnames = StringUtils.join(cnameList, ",");
         return ResponseEntity.ok(cnames);
     }
+
+
+    @GetMapping("/list/cid")
+    public ResponseEntity<List<Category>> queryCategoryByIds(@RequestParam("cids") List<Long> cids)
+    {
+        List<Category> categoryList = categoryService.getListByCids(cids);
+        if(categoryList==null || categoryList.size()==0)
+        {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(categoryList);
+    }
 }

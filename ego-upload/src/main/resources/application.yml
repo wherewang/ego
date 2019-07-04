@@ -2,7 +2,7 @@ server:
   port: 8082
 spring:
   application:
-    name: upload-client
+    name: upload-service
   servlet:
     multipart:
       max-file-size: 5MB # 限制文件上传的大小

@@ -2,7 +2,7 @@ server:
   port: 8086
 spring:
   application:
-    name: sms-client
+    name: sms-service
   rabbitmq:
     host: 169.254.149.130
     username: ego
@@ -20,7 +20,7 @@ eureka:
     lease-expiration-duration-in-seconds: 15
 ego:
   sms:
-    accessKeyId: LTAI7GS3oLcUcUi9 # 你自己的accessKeyId
-    accessKeySecret: WWVhOk9UhvbrnF0XdFwEviTMMepz8U # 你自己的AccessKeySecret
+    accessKeyId: LTAI5T9ARLvz5p7c # 你自己的accessKeyId
+    accessKeySecret: lisIsfja0VAU9CjallSpNmleTrN3Nu # 你自己的AccessKeySecret
     signName: 易购商城 # 签名名称
-    verifyCodeTemplate: SMS_167530328 # 模板名称
+    verifyCodeTemplate: SMS_167527456 # 模板名称
