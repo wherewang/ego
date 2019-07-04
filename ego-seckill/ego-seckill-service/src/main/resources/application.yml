@@ -1,0 +1,53 @@
+server:
+  port: 8090
+  tomcat:
+    uri-encoding: UTF-8
+spring:
+  application:
+    name: seckill-service
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/
+    suffix: .html
+  main:
+    allow-bean-definition-overriding: true
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/ego?characterEncoding=UTF-8&useSSL=false
+    username: root
+    password:
+    driver-class-name: com.mysql.jdbc.Driver
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 10
+  rabbitmq:
+    virtual-host: /ego
+    username: ego
+    password: ego
+    host: 169.254.149.130
+    template:
+      exchange: ego.order.exchange
+    publisher-confirms: true
+  redis:
+    host: 169.254.149.130
+  jackson:
+    default-property-inclusion: non_null # 配置json处理时忽略空值
+  http:
+    encoding:
+      charset: UTF-8
+      force: true
+      enabled: true
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:10086/eureka
+    registry-fetch-interval-seconds: 5
+  instance:
+    instance-id: ${spring.application.name}:${server.port}
+    prefer-ip-address: true  #当你获取host时，返回的不是主机名，而是ip
+    ip-address: 127.0.0.1
+    lease-expiration-duration-in-seconds: 10 #10秒不发送九过期
+    lease-renewal-interval-in-seconds: 5 #每隔5秒发一次心跳
+ego:
+  jwt:
+    cookieName: EGO_TOKEN
+    pubKeyPath: C:\\tmp\\rsa\\rsa.pub # 公钥地址
